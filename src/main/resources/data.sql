@@ -8,6 +8,7 @@ TRUNCATE TABLE
     users
 RESTART IDENTITY CASCADE;
 
+SELECT 'DATA.SQL IS RUNNING';
 
 INSERT INTO cities (id, name, created_at, updated_at)
 VALUES
