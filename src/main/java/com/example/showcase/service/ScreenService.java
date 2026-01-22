@@ -7,6 +7,7 @@ import com.example.showcase.dto.response.ScreenResponse;
 import com.example.showcase.repository.ScreenRepository;
 import com.example.showcase.repository.TheatreRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class ScreenService {
         return new ScreenResponse(saved.getId(), saved.getName(), saved.getTotalSeats(), theatre.getId(), theatre.getName());
     }
 
+    @Transactional(readOnly = true)
     public List<ScreenResponse> getAllScreens(){
         return screenRepository.findAll().stream().map(screen -> new ScreenResponse(screen.getId(), screen.getName(), screen.getTotalSeats(), screen.getTheatre().getId(), screen.getTheatre().getName())).toList();
     }

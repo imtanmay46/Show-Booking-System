@@ -7,6 +7,7 @@ import com.example.showcase.dto.response.TheatreResponse;
 import com.example.showcase.repository.CityRepository;
 import com.example.showcase.repository.TheatreRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class TheatreService {
         return new TheatreResponse(saved.getId(), saved.getName(), city.getId(), city.getName());
     }
 
+    @Transactional(readOnly = true)
     public List<TheatreResponse> getAllTheatres(){
         return theatreRepository.findAll().stream().map(theatre -> new TheatreResponse(theatre.getId(), theatre.getName(), theatre.getCity().getId(), theatre.getCity().getName())).toList();
     }
