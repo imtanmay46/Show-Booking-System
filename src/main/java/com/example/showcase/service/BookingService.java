@@ -46,7 +46,7 @@ public class BookingService {
         this.seatRepository = seatRepository;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public AvailableSeatsResponse getAvailableSeats(Long showId) {
         Show show = showRepository.findById(showId)
                 .orElseThrow(() -> new RuntimeException("Show not found"));
@@ -189,6 +189,7 @@ public class BookingService {
         return buildBookingResponse(booking);
     }
 
+    @Transactional
     private void releaseExpiredLocks(List<ShowSeat> showSeats) {
         for (ShowSeat showSeat : showSeats) {
             if (showSeat.getStatus() == SeatStatus.LOCKED &&
