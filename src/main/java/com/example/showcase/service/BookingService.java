@@ -46,14 +46,12 @@ public class BookingService {
         this.seatRepository = seatRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public AvailableSeatsResponse getAvailableSeats(Long showId) {
         Show show = showRepository.findById(showId)
                 .orElseThrow(() -> new RuntimeException("Show not found"));
 
         List<ShowSeat> showSeats = showSeatRepository.findByShowId(showId);
-
-        releaseExpiredLocks(showSeats);
 
         List<AvailableSeatsResponse.SeatAvailability> seatAvailabilities = showSeats.stream()
                 .map(ss -> new AvailableSeatsResponse.SeatAvailability(
